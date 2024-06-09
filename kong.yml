@@ -1,0 +1,28 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+- host: http-mock
+  name: front-end
+  plugins:
+  - name: oidc
+    config:
+      client_id: foo
+      client_secret: fUp4H6418Zt3Zcj1Lxyh3DxrGPs1WE4o
+      discovery: http://traefik:8888/realms/master/.well-known/openid-configuration
+      redirect_uri: http://localhost:8000/some/path/callback
+      # session secret set as environment variable because of the issue below
+      # https://github.com/nokia/kong-oidc/issues/123
+      # session_secret: Zm9vb29v
+  port: 1080
+  protocol: http
+  routes:
+  - name: foo_route
+    paths:
+    - /some/path
+    strip_path: true
+
+plugins:
+- name: file-log
+  config:
+    path: /dev/stdout
