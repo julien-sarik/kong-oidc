@@ -46,6 +46,8 @@ spec:
       value: admin
     - name: KEYCLOAK_ADMIN_PASSWORD
       value: admin
+    - name: KC_LOG_LEVEL
+      value: INFO,org.keycloak.events:debug
     image: quay.io/keycloak/keycloak:24.0.5
     name: keycloak
     ports:
