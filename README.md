@@ -28,7 +28,7 @@ curl -v -X PUT "http://localhost:1080/mockserver/expectation" -d '{
         "path": "/"
     },
     "httpResponseTemplate": {
-        "template": "{ \"statusCode\": 200, \"cookies\": { \"session\": \"$!request.headers[\"Session-Id\"][0]\" }, \"headers\": { \"Client-User-Agent\": [ \"$!request.headers[\"User-Agent\"][0]\" ] }, \"body\": \"$!request.headers\" }",
+        "template": "{ \"statusCode\": 200, \"body\": \"$!request.headers\" }",
         "templateType": "VELOCITY"
     }
 }'
