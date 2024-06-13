@@ -19,8 +19,6 @@ Spin up Kong, Keycloak and a HTTP mock assuming the role of a front-end
 podman play kube pods.yml --net foo
 ```
 
-Import an OIDC client from `keycloak-client.json` file in keycloak running on `http://localhost:8080/admin/master/console/#/master/clients`.  
-
 Configure the HTTP mock to return headers proxied by Kong. The mock will return the headers forwarded by Kong.
 ```
 curl -v -X PUT "http://localhost:1080/mockserver/expectation" -d '{
@@ -33,6 +31,8 @@ curl -v -X PUT "http://localhost:1080/mockserver/expectation" -d '{
     }
 }'
 ```
+
+Import an OIDC client from `keycloak-client.json` file in keycloak running on `http://localhost:8080/admin/master/console/#/master/clients`.  
 
 Browse the resource server at:
 ```
