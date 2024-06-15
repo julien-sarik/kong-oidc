@@ -1,7 +1,7 @@
 # kong-oidc
 ## description
-This plugin was initially started by a [Nokia open-source project](https://github.com/nokia/kong-oidc). Since the initial project has being supported in 2019, it has been forked in 2021 by [another repo](https://github.com/revomatico/kong-oidc) which archived since 2024.  
-The plugin relies on the Nginx [lua-resty-openidc library](https://github.com/zmartzone/lua-resty-openidc).
+This plugin was initially started by a [Nokia open-source project](https://github.com/nokia/kong-oidc). Since the initial project has stopped being supported in 2019, it has been forked in 2021 by [another repo](https://github.com/revomatico/kong-oidc) which is archived since 2024.  
+The plugin relies on the Nginx [lua-resty-openidc library](https://github.com/zmartzone/lua-resty-openidc) which is OIDC certified.
 
 ## build & run
 Build Kong image embedded with the OIDC plugin
