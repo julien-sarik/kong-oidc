@@ -2,6 +2,7 @@
 ## description
 This plugin was initially started by a [Nokia open-source project](https://github.com/nokia/kong-oidc). Since the initial project has stopped being supported in 2019, it has been forked in 2021 by [another repo](https://github.com/revomatico/kong-oidc) which is archived since 2024.  
 The plugin relies on the Nginx [lua-resty-openidc library](https://github.com/zmartzone/lua-resty-openidc) which is OIDC certified.
+The lua-resty-openidc library allows enable Nginx to implement an Oauth2 resource server but it also allows to implement the responsibility of the OIDC Relying Party which off-load the responsibility from the front-end. Thanks to the library the state (access/ID/refresh tokens) of the session is encrypted and stored as a cookie.
 
 ## build & run
 Build Kong image embedded with the OIDC plugin
@@ -45,6 +46,12 @@ podman play kube pods.yml --down
 ```
 
 Github of the Kong OIDC fork https://github.com/revomatico/kong-oidc
+
+## configuration
+### user info
+The [open-source plugin](https://github.com/revomatico/kong-oidc) ignores the `session_contents` configuration provided by the [Lua resty openidc library](https://github.com/zmartzone/lua-resty-openidc/tree/v1.7.6?tab=readme-ov-file#sample-configuration-for-google-signin).  
+This field allows to control what is stored into the session.  
+An improvement to the open-source plugin is made in `utils.get_options()` function to disable the requests to the user-info endpoint (as the ID token is already stored). Otherwise the user-info endpoint is called after the code exchange (but for some reason it's not updated after token request see https://github.com/zmartzone/lua-resty-openidc/blob/v1.7.6/lib/resty/openidc.lua#L1165).
 
 # troubleshooting
 ## `request to the redirect_uri path, but there's no session state found`

@@ -87,6 +87,15 @@ function M.get_options(config, ngx)
     proxy_opts = {
       http_proxy  = config.http_proxy,
       https_proxy = config.https_proxy
+    },
+    -- list of features stored in session
+    session_contents = {
+      id_token = true,
+      -- we don't call the OP's user-info endpoint
+      user = false,
+      enc_id_token = false,
+      access_token = true
+
     }
   }
 end
