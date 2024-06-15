@@ -27,9 +27,23 @@ spec:
       value: "off"
     - name: KONG_PLUGINS
       value: bundled,oidc
+    ###
+    # Kong allows to inject Nginx directives through env vars
+    # https://docs.konghq.com/gateway/3.7.x/reference/nginx-directives/
+    #   - the env var name must be prefixed by `KONG_`
+    #   - entries prefixed by `KONG_NGINX_HTTP_` will end up in the http block directive of the Nginx config file
+    #   - entries prefixed by `KONG_NGINX_PROXY_` will end up in the server block directive of the Nginx config file
+    ###
     # https://github.com/nokia/kong-oidc/issues/123
+    # https://github.com/bungle/lua-resty-session/tree/v3.10?tab=readme-ov-file#notes-about-turning-lua-code-cache-off
     - name: KONG_NGINX_PROXY_SET
       value: "$$session_secret fooooo"
+    # lua-resty-openidc:1.7.6-3 allows to cache the OIDC discovery document and the OP public keys into an Openresty shared dictionnary (shared among all workers of the Nginx node)
+    # lua-resty-openidc will automatically cache those values if the 'discovery' and 'jwks' dictionnaries are created.
+    # For more info about lua-resty-openidc config: see https://github.com/zmartzone/lua-resty-openidc/tree/v1.7.6?tab=readme-ov-file#caching
+    # For more info on shared dictionnary: https://github.com/openresty/lua-nginx-module/blob/v0.10.26/README.markdown#lua_shared_dict
+    - name: KONG_NGINX_HTTP_LUA_SHARED_DICT
+      value: "discovery 1m; lua_shared_dict jwks 1m"
     image: localhost/kong:kong-oidc
     name: kong
     ports:
