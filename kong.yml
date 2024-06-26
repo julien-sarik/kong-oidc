@@ -26,3 +26,9 @@ plugins:
 - name: file-log
   config:
     path: /dev/stdout
+- name: prometheus
+  config:
+     bandwidth_metrics: true
+     latency_metrics: true
+     status_code_metrics: true
+     
