@@ -94,7 +94,18 @@ function make_oidc(oidcConfig)
   end
   local res, err = require("resty.openidc").authenticate(oidcConfig, ngx.var.request_uri, unauth_action)
 
+  local root_path = '/some/path'
   if err then
+    ngx.log(ngx.INFO, err .. ", redirecting to " .. root_path)
+    if string.find(err, "state restored", 1, true) or string.find(err, "no session state", 1, true) then
+        ngx.log(ngx.WARN, err .. ", redirecting to " .. root_path)
+        ngx.redirect(root_path)
+    else
+        ngx.status = 403
+        ngx.header["Content-Type"] = "text/html"
+        ngx.say("<html><head></head><body>"..err.."<br/><br/></body></html>")
+    end
+    ngx.exit(ngx.HTTP_FORBIDDEN)
     if err == 'unauthorized request' then
       return kong.response.error(ngx.HTTP_UNAUTHORIZED)
     else
