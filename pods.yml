@@ -28,7 +28,7 @@ spec:
     - name: KONG_DATABASE
       value: "off"
     - name: KONG_PLUGINS
-      value: bundled,oidc
+      value: bundled,oidc,custom-request-transformer
     ###
     # Kong allows to inject Nginx directives through env vars
     # https://docs.konghq.com/gateway/3.7.x/reference/nginx-directives/
@@ -58,6 +58,7 @@ spec:
     - mountPath: /kong.yml
       name: kong-config
   - args:
+    - --spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true
     - start-dev
     env:
     - name: KEYCLOAK_ADMIN

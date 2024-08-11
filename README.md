@@ -42,7 +42,12 @@ http://localhost:8000/some/path
 
 Prometheus metrics are available on the admin port at `http://localhost:8001/metrics`.  
 
-Shutdown
+Logout:
+```
+http://localhost:8000/logout
+```
+
+Shutdown:
 ```
 podman play kube pods.yml --down
 ```
