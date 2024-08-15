@@ -1,6 +1,6 @@
 {
   "clientId": "foo",
-  "name": "",
+  "name": "foo app",
   "description": "",
   "rootUrl": "",
   "adminUrl": "",
@@ -29,7 +29,11 @@
     "oauth2.device.authorization.grant.enabled": "false",
     "client.secret.creation.time": "1717800470",
     "backchannel.logout.session.required": "true",
-    "backchannel.logout.revoke.offline.tokens": "false"
+    "backchannel.logout.revoke.offline.tokens": "false",
+    "login_theme": "",
+    "display.on.consent.screen": false,
+    "frontchannel.logout.url": "http://localhost:8000/logout",
+    "backchannel.logout.url": ""
   },
   "authenticationFlowBindingOverrides": {},
   "fullScopeAllowed": true,
@@ -51,5 +55,6 @@
     "view": true,
     "configure": true,
     "manage": true
-  }
+  },
+  "authorizationServicesEnabled": false
 }
