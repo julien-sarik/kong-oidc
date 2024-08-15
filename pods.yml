@@ -35,11 +35,14 @@ spec:
     #   - the env var name must be prefixed by `KONG_`
     #   - entries prefixed by `KONG_NGINX_HTTP_` will end up in the http block directive of the Nginx config file
     #   - entries prefixed by `KONG_NGINX_PROXY_` will end up in the server block directive of the Nginx config file
+    # Kong uses a template file in /usr/local/kong/nginx-kong.conf and import it in the final
+    # configuration file in /usr/local/kong/nginx.conf.
     ###
     # https://github.com/nokia/kong-oidc/issues/123
     # https://github.com/bungle/lua-resty-session/tree/v3.10?tab=readme-ov-file#notes-about-turning-lua-code-cache-off
     - name: KONG_NGINX_PROXY_SET
-      value: "$$session_secret fooooo"
+    # if you use docker-compose then escape the '$' with '$$' to prevent interpolation.
+      value: "$session_secret fooooo; set $session_name bar"
     # lua-resty-openidc:1.7.6-3 allows to cache the OIDC discovery document and the OP public keys into an Openresty shared dictionnary (shared among all workers of the Nginx node)
     # lua-resty-openidc will automatically cache those values if the 'discovery' and 'jwks' dictionnaries are created.
     # For more info about lua-resty-openidc config: see https://github.com/zmartzone/lua-resty-openidc/tree/v1.7.6?tab=readme-ov-file#caching
