@@ -2,7 +2,7 @@
 ## description
 This plugin was initially started by a [Nokia open-source project](https://github.com/nokia/kong-oidc). Since the initial project has stopped being supported in 2019, it has been forked in 2021 by [another repo](https://github.com/revomatico/kong-oidc) which is archived since 2024.  
 The plugin relies on the Nginx [lua-resty-openidc library](https://github.com/zmartzone/lua-resty-openidc) which is OIDC certified.
-The lua-resty-openidc library allows enable Nginx to implement an Oauth2 resource server but it also allows to implement the responsibility of the OIDC Relying Party which off-load the responsibility from the front-end. Thanks to the library the state (access/ID/refresh tokens) of the session is encrypted and stored as a cookie.
+The lua-resty-openidc library allows an Nginx server to implement an Oauth2 resource server but it also allows to implement the responsibility of the OIDC Relying Party which off-load the responsibility from the front-end. Thanks to the library the state (access/ID/refresh tokens) of the session is encrypted and stored as a cookie.
 
 ## build & run
 Build Kong image embedded with the OIDC plugin
@@ -15,12 +15,12 @@ Create podman network
 podman network create foo
 ```
 
-Spin up Kong, Keycloak and a HTTP mock assuming the role of a front-end
+Spin up Kong, Keycloak and a HTTP mock assuming the role of a secured application.
 ```
 podman play kube pods.yml --net foo
 ```
 
-Configure the HTTP mock to return headers proxied by Kong. The mock will return the headers forwarded by Kong.
+Configure the HTTP mock to return headers proxied by Kong.  
 ```
 curl -v -X PUT "http://localhost:1080/mockserver/expectation" -d '{
     "httpRequest": {
@@ -51,8 +51,6 @@ Shutdown:
 ```
 podman play kube pods.yml --down
 ```
-
-Github of the Kong OIDC fork https://github.com/revomatico/kong-oidc
 
 ## configuration
 ### user info
