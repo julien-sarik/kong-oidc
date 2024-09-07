@@ -93,7 +93,8 @@ function M.get_options(config, ngx)
       id_token = true,
       -- we don't call the OP's user-info endpoint
       user = false,
-      enc_id_token = false,
+      -- this is used to send 'id_token_hint' parameter on logout
+      enc_id_token = true,
       access_token = true
 
     }

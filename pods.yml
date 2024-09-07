@@ -62,7 +62,6 @@ spec:
     - mountPath: /kong.yml
       name: kong-config
   - args:
-    - --spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true
     - start-dev
     env:
     - name: KEYCLOAK_ADMIN
