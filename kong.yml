@@ -14,9 +14,8 @@ services:
       redirect_after_logout_uri: http://traefik:8888/realms/master/protocol/openid-connect/logout
       redirect_after_logout_with_id_token_hint: "yes"
       redirect_uri: http://localhost:8000/some/path/callback
-      # session secret set as environment variable because of the issue below
-      # https://github.com/nokia/kong-oidc/issues/123
-      # session_secret: Zm9vb29v
+      cookie_name: bar
+      encryption_secret: Zm9vb29v
   port: 1080
   protocol: http
   routes:
@@ -27,12 +26,6 @@ services:
   - name: logout
     paths:
     - /logout
-    plugins:
-    - name: custom-request-transformer
-      config:
-        remove:
-          headers:
-          - 'Accept'
 
 plugins:
 - name: file-log

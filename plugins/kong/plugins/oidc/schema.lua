@@ -121,12 +121,6 @@ return {
             }
           },
           {
-            session_secret = {
-              type = "string",
-              required = false
-            }
-          },
-          {
             recovery_page_path = {
               type = "string"
             }
@@ -305,7 +299,21 @@ return {
               type = "string",
               required = false
             }
-          }
+          },
+          {
+            cookie_name = {
+              type = "string",
+              required = false,
+            }
+          },
+          {
+            -- use for key derivation to encrypt the session in the cookie
+            -- https://github.com/bungle/lua-resty-session/tree/v4.0.5?tab=readme-ov-file#session-configuration
+            encryption_secret = {
+              type = "string",
+              required = true
+            }
+          },
         }
       }
     }

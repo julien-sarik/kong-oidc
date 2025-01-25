@@ -4,7 +4,6 @@ local OidcHandler = {
 }
 local utils = require("kong.plugins.oidc.utils")
 local filter = require("kong.plugins.oidc.filter")
-local session = require("kong.plugins.oidc.session")
 
 
 function OidcHandler:access(config)
@@ -19,7 +18,6 @@ function OidcHandler:access(config)
   end
 
   if filter.shouldProcessRequest(oidcConfig) then
-    session.configure(config)
     handle(oidcConfig)
   else
     ngx.log(ngx.DEBUG, "OidcHandler ignoring request, path: " .. ngx.var.request_uri)
@@ -92,7 +90,7 @@ function make_oidc(oidcConfig)
     -- constant for resty.oidc library
     unauth_action = "deny"
   end
-  local res, err = require("resty.openidc").authenticate(oidcConfig, ngx.var.request_uri, unauth_action)
+  local res, err = require("resty.openidc").authenticate(oidcConfig, ngx.var.request_uri, unauth_action, { cookie_name = oidcConfig.cookie_name, secret = oidcConfig.encryption_secret })
 
   if err then
     if err == 'unauthorized request' then
