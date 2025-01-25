@@ -97,7 +97,9 @@ function M.get_options(config, ngx)
       enc_id_token = true,
       access_token = true
 
-    }
+    },
+    cookie_name = config.cookie_name,
+    encryption_secret = config.encryption_secret,
   }
 end
 
