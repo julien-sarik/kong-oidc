@@ -26,6 +26,26 @@ services:
   - name: logout
     paths:
     - /logout
+- host: http-mock
+  name: back-end
+  plugins:
+  - name: oidc
+    config:
+      client_id: foo
+      client_secret: fUp4H6418Zt3Zcj1Lxyh3DxrGPs1WE4o
+      discovery: http://traefik:8888/realms/master/.well-known/openid-configuration
+      cookie_name: bar
+      encryption_secret: Zm9vb29v
+      # if introspection_endpoint is set then there is no attempt to refresh the token
+      # introspection_endpoint: "http://traefik:8888/realms/master/protocol/openid-connect/token/introspect"
+      unauth_action: deny
+  port: 1080
+  protocol: http
+  routes:
+  - name: resource_server
+    paths:
+    - /resource_server
+    strip_path: true
 
 plugins:
 - name: file-log
