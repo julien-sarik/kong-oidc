@@ -50,6 +50,23 @@ services:
 plugins:
 - name: file-log
   config:
+    custom_fields_by_lua:
+      # hide sensitive data
+      request.headers: "return nil"
+      response.headers: "return nil"
+      # add additional data
+      ## note on 'ngx.var':
+      ## list of variables within 'ngx.var': https://nginx.org/en/docs/varindex.html
+      ## using 'ngx.var' is expensive, see https://github.com/openresty/lua-nginx-module?tab=readme-ov-file#ngxvarvariable
+      duration_ms: "return tonumber(ngx.var.request_time) * 1000"
+      user_agent: "return kong.request.get_header('User-Agent')"
+      # if the client is authenticated, the OIDC plugin sets the credentials with the ID token
+      user_id: "return kong.client.get_credential() == nil and '' or kong.client.get_credential().sub"
+      ## note on 'ngx.ctx'
+      ## 'ngx.ctx' holds data within the lifetime of the request
+      ## more details https://github.com/openresty/lua-nginx-module?tab=readme-ov-file#ngxctx
+      ## 'ngx.ctx' is cheaper than 'ngx.var' but is still more expensive than using local varialbes
+      x_request_id: "return ngx.ctx.request_id"
     path: /dev/stdout
 - name: prometheus
   config:
