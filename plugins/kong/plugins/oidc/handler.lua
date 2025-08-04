@@ -90,7 +90,16 @@ function make_oidc(oidcConfig)
     -- constant for resty.oidc library
     unauth_action = "deny"
   end
-  local res, err = require("resty.openidc").authenticate(oidcConfig, ngx.var.request_uri, unauth_action, { cookie_name = oidcConfig.cookie_name, secret = oidcConfig.encryption_secret })
+  local session_config = { 
+    cookie_name = oidcConfig.cookie_name, 
+    secret = oidcConfig.encryption_secret,
+    idling_timeout = oidcConfig.session_opts.idling_timeout,
+    rolling_timeout = oidcConfig.session_opts.rolling_timeout,
+    absolute_timeout = oidcConfig.session_opts.absolute_timeout,
+    remember_rolling_timeout = oidcConfig.session_opts.remember_rolling_timeout,
+    remember_absolute_timeout = oidcConfig.session_opts.remember_absolute_timeout,
+  }
+  local res, err = require("resty.openidc").authenticate(oidcConfig, ngx.var.request_uri, unauth_action, session_config)
 
   if err then
     if err == 'unauthorized request' then

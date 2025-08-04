@@ -314,6 +314,46 @@ return {
               required = true
             }
           },
+          {
+            -- session idling timeout in seconds, 0 to disable
+            session_idling_timeout = {
+              type = "number",
+              required = false,
+              default = 0
+            }
+          },
+          {
+            -- session rolling timeout in seconds, 0 to disable
+            session_rolling_timeout = {
+              type = "number",
+              required = false,
+              default = 0
+            }
+          },
+          {
+            -- session absolute timeout in seconds, 0 to disable
+            session_absolute_timeout = {
+              type = "number",
+              required = false,
+              default = 0
+            }
+          },
+          {
+            -- remember (persistent) session rolling timeout in seconds
+            session_remember_rolling_timeout = {
+              type = "number",
+              required = false,
+              default = 0
+            }
+          },
+          {
+            -- remember (persistent) session absolute timeout in seconds
+            session_remember_absolute_timeout = {
+              type = "number",
+              required = false,
+              default = 0
+            }
+          },
         }
       }
     }
