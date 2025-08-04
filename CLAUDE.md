@@ -55,7 +55,6 @@ curl -v -X PUT "http://localhost:1080/mockserver/expectation" -d '{
 
 ### Configuration Files
 - `kong.yml`: Declarative Kong configuration with services, routes, and plugins
-- `kong.conf`: Kong gateway configuration (mostly default values)
 - `keycloak-client.json`: Keycloak client configuration for OIDC flow
 - `pods.yml`: Kubernetes pod configuration for Podman
 
@@ -87,9 +86,8 @@ curl -v -X PUT "http://localhost:1080/mockserver/expectation" -d '{
 - Flexible filtering for selective authentication
 
 ## Development Notes
-- The OIDC plugin is a fork of the archived Nokia/revomatico projects
+- The OIDC plugin is a fork of the archived Nokia/revomatico projects. The plugin relies on https://github.com/zmartzone/lua-resty-openidc/blob/v1.8.0/lib/resty/openidc.lua which itself relies on https://github.com/bungle/lua-resty-session/blob/v4.1.3/lib/resty/session.lua.
 - Custom improvements include session content control and user-info endpoint optimization
-- Response transformer plugin modifies browser history for clean URLs
 - Comprehensive logging configuration for debugging authentication flows
 
 ## Common Issues and Troubleshooting
