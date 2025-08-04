@@ -1,4 +1,4 @@
-FROM docker.io/kong/kong-gateway:3.9.0.0-ubuntu
+FROM docker.io/kong/kong-gateway:3.9.1.2-ubuntu
 
 USER root
 RUN apt update && apt install -y unzip
