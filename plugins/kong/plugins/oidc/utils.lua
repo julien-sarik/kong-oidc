@@ -100,6 +100,14 @@ function M.get_options(config, ngx)
     },
     cookie_name = config.cookie_name,
     encryption_secret = config.encryption_secret,
+    -- session timeout configuration
+    session_opts = {
+      idling_timeout = config.session_idling_timeout,
+      rolling_timeout = config.session_rolling_timeout,
+      absolute_timeout = config.session_absolute_timeout,
+      remember_rolling_timeout = config.session_remember_rolling_timeout,
+      remember_absolute_timeout = config.session_remember_absolute_timeout,
+    },
   }
 end
 
